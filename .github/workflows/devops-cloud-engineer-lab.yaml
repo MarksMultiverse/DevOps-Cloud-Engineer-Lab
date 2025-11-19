@@ -23,5 +23,10 @@ jobs:
                   client-id: ${{ secrets.AZURE_CLIENT_ID }}
                   tenant-id: ${{ secrets.AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-            
+                  
+            - name: Create Resource Group
+              uses: azure/arm-deploy@v1
+              with:
+                scope: subscription
+                deploymentName: ${{ github.run_number }}
+                template: ./modules/resourceGroup/main.bicep
