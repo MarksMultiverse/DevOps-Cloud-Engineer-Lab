@@ -50,5 +50,5 @@ jobs:
                 resourceGroupName: ${{ steps.rg.outputs.resourceGroupName }}
                 region: westeurope
                 deploymentName: aks-${{ github.run_number }}
-                template: ./modules/kubernetes/main.bicep
+                template: ./modules/aks/main.bicep
                 parameters: subnetId=${{ steps.vnet.outputs.aksSubnetId }}
