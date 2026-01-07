@@ -25,9 +25,20 @@ jobs:
                   subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
                   
             - name: Create Resource Group
+              id: rg
               uses: azure/arm-deploy@v1
               with:
                 scope: subscription
                 region: westeurope
-                deploymentName: ${{ github.run_number }}
+                deploymentName: rg-${{ github.run_number }}
                 template: ./modules/resourceGroup/main.bicep
+
+            - name: Deploy Vnet
+              id: vnet
+              uses: azure/arm=deploy@v1
+              with:
+                scope: resourcegroup
+                resourceGroupName: ${{ steps.rg.outputs.resourceGroupName }}
+                region: westeurope
+                deploymentName: vnet-${{ github.run_number }}
+                template: ./modules/networking/main.bicep
