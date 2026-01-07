@@ -35,7 +35,7 @@ jobs:
 
             - name: Deploy Vnet
               id: vnet
-              uses: azure/arm=deploy@v1
+              uses: azure/arm-deploy@v1
               with:
                 scope: resourcegroup
                 resourceGroupName: ${{ steps.rg.outputs.resourceGroupName }}
