@@ -9,6 +9,17 @@ param tags object = {
   Responsible: 'mark.tilleman@cegeka.com'
 }
 
+resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
+  name: 'acr${uniqueString(resourceGroup().id)}'
+  location: location
+  sku: {
+    name: 'Basic'
+  }
+  properties: {
+    adminUserEnabled: false
+  }
+}
+
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-08-01' = {
   name: clusterName
   location: location
@@ -34,6 +45,18 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-08-01' = {
       serviceCidr: '10.1.0.0/16'
       dnsServiceIP: '10.1.0.10'
     }
+  }
+}
+
+resource acrPullRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(acr.id, aks.id, 'acrpull')
+  scope: acr
+  properties: {
+    roleDefinitionId: subscriptionResourceId(
+      'Microsoft.Authorization/roleDefinitions',
+      '7f951dda-4ed3-4680-a7ca-43fe172d538d' // AcrPull
+    )
+    principalId: aks.identity.principalId
   }
 }
 
