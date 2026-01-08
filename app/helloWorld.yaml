@@ -16,7 +16,7 @@ spec:
       - name: hello
         image: nginxdemos/hello
         ports:
-        - containerPort: 443
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -27,5 +27,5 @@ spec:
   selector:
     app: hello
   ports:
-  - port: 443
-    targetPort: 443
+  - port: 80
+    targetPort: 80
