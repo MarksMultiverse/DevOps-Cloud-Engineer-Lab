@@ -63,6 +63,6 @@ jobs:
 
             - name: Deploy Hello World app
               run: |
-                kubectl apply -f k8s/hello.yaml
+                kubectl apply -f app/helloWorld.yaml
                 kunectl rollout status deployment/hello-world
           
