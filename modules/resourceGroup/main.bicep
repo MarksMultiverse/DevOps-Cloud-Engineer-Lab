@@ -2,6 +2,7 @@ targetScope='subscription'
 
 param resourceGroupName string = 'rg-devops-cloud-engineer-lab'
 param location string = 'westeurope'
+param ownerObjectId string = '133e1112-c5f5-41b3-b660-f70038785ccf'
 param tags object = {
   Project: 'devops-cloud-engineer-lab'
   Responsible: 'mark.tilleman@cegeka.com'
