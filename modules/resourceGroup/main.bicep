@@ -13,4 +13,13 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
+resource ownerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup.id, ownerObjectId, 'Owner')
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')
+    principalId: ownerObjectId
+    principalType: 'ServicePrincipal'
+  }
+}
+
 output resourceGroupName string = resourceGroup.name
