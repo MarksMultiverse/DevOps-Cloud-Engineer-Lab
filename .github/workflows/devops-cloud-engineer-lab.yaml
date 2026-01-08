@@ -61,8 +61,19 @@ jobs:
                 resource-group: ${{ steps.rg.outputs.resourceGroupName }}
                 cluster-name: ${{ steps.aks.outputs.clusterName }}
 
+            - name: Install NGINX Ingress Controller
+              run: |
+                helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+                helm repo update
+                helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+                  --namespace ingress-nginx \
+                  --create-namespace  
+
             - name: Deploy Hello World app
               run: |
                 kubectl apply -f app/helloWorld.yaml
                 kubectl rollout status deployment/hello-world
-          
+
+            - name: Deploy Ingress
+              run: |
+                kubectl apply -f app/helloIngress.yaml
